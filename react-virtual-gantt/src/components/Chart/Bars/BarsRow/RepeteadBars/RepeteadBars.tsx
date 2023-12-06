@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import BarItem from '../BarItem';
 import { GanttConsts } from '../../../../../constants';
@@ -22,7 +22,9 @@ const RepeteadBars: React.FC<RepeteadBarsProps> = ({
   barKey,
   onBarDoubleClick,
 }) => {
-  console.log(data, 'wtfdata');
+  useEffect(() => {
+    console.log(data, 'wtfdata');
+  }, []);
   const fromDate = useMemo(() => {
     if (!firstRenderedDate) {
       return null;

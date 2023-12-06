@@ -97,11 +97,11 @@ export const GanttDimensionsSettings = {
 };
 
 export const RelativeGanttDimensionSettings = {
-  [RelativeGanttDimensions.HOURS]: {
+  [RelativeGanttDimensions.HOUR]: {
     value: 1,
     hours: 1,
     label: '1 hour',
-    unitOfTime: GanttUnitOfTimes.HOURS,
+    unitOfTime: GanttUnitOfTimes.HOUR,
     itemsCount: 11,
     stepWidth: GanttConsts.SCALE_STEP_DEFAULT_WIDTH,
     scaleStepItems: GanttConsts.HOURS_IN_DAY / 1,

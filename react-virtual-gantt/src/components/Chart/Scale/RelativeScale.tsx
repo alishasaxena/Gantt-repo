@@ -5,142 +5,146 @@ import {
   ListOnItemsRenderedProps,
   ListOnScrollProps,
 } from 'react-window';
-import { RelGanttContext } from '../../Gantt/RelativeGanttContext';
-
+import { GanttContext } from '../../Gantt/GanttContext';
 import { useForwardRef } from '../../../hooks';
-import { RelativeGanttDimensions } from '../../../enums';
-import { GanttConsts, RelativeGanttDimensionSettings } from '../../../constants';
+import { getScaleItems } from '../../../utils';
+import { GanttDimensions, RelativeGanttDimensions } from '../../../enums';
+import {
+  GanttConsts,
+  GanttDimensionsSettings,
+  RelativeGanttDimensionSettings,
+} from '../../../constants';
 import './Scale.css';
+import { RelGanttContext } from '../../Gantt/RelativeGanttContext';
 import { getRelativeScale } from '../../../utils/getRelativeScale';
 
-interface ScaleProps {
+interface RelativeScaleProps {
   width: number;
   wrapRef: RefObject<HTMLDivElement>;
+  data: any;
 }
 
-const RelativeScale = forwardRef<List<number[]>, ScaleProps>(({ width, wrapRef }, ref) => {
-  const { scaleDates, setScaleDates, setScaleRenderState, settings } = useContext(RelGanttContext);
-  const listRef = useForwardRef<List<number[]>>(ref);
-  const outerRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+const RelativeScale = forwardRef<List<number[]>, RelativeScaleProps>(
+  ({ width, wrapRef, data }, ref) => {
+    const { scaleDates, setScaleDates, setScaleRenderState, relSettings } =
+      useContext(RelGanttContext);
+    const listRef = useForwardRef<List<number[]>>(ref);
+    const outerRef = useRef<HTMLDivElement>(null);
+    const innerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    console.log(scaleDates, 'asdf');
-  }, []);
+    const getItemSize = useCallback(
+      (index: number) => {
+        const date = dayjs.unix(scaleDates[index]);
 
-  const getItemSize = useCallback(
-    (index: number) => {
-      const date = dayjs.unix(scaleDates[index]);
-
-      if (settings.dimension === RelativeGanttDimensions.HOURS) {
-        const days = date.daysInMonth();
-
-        return days * settings.stepWidth;
-      }
-
-      return settings.scaleStepItems * settings.stepWidth;
-    },
-    [scaleDates, settings.dimension, settings.scaleStepItems, settings.stepWidth]
-  );
-
-  const onScroll = useCallback(
-    ({ scrollOffset }: ListOnScrollProps) => {
-      const unitOfTime = RelativeGanttDimensionSettings[settings.dimension].unitOfTime;
-
-      if (scrollOffset < GanttConsts.MIN_SCROLL_OFFSET) {
-        const newDate = dayjs.unix(scaleDates[0]).subtract(1, unitOfTime);
-        let newItemWidth = settings.scaleStepItems * settings.stepWidth;
-
-        if (settings.dimension === RelativeGanttDimensions.HOURS) {
-          const days = newDate.daysInMonth();
-
-          newItemWidth = days * settings.stepWidth;
+        if (relSettings.dimension === RelativeGanttDimensions.HOUR) {
+          return relSettings.stepWidth;
         }
 
-        setScaleDates([newDate.unix(), ...scaleDates]);
+        return relSettings.scaleStepItems * relSettings.stepWidth;
+      },
+      [scaleDates, relSettings.dimension, relSettings.scaleStepItems, relSettings.stepWidth]
+    );
 
-        wrapRef.current?.scrollTo({ left: scrollOffset + newItemWidth });
-        listRef?.current?.resetAfterIndex(0);
-      }
+    const onScroll = useCallback(
+      ({ scrollOffset }: ListOnScrollProps) => {
+        const unitOfTime = RelativeGanttDimensionSettings[relSettings.dimension].unitOfTime;
 
-      if (
-        (outerRef.current?.scrollWidth || 0) -
-          (outerRef.current?.clientWidth || 0) -
-          scrollOffset -
-          GanttConsts.TREE_WIDTH <
-        GanttConsts.MIN_SCROLL_OFFSET
-      ) {
-        setScaleDates([
-          ...scaleDates,
-          dayjs
-            .unix(scaleDates[scaleDates.length - 1])
-            .add(1, unitOfTime)
-            .unix(),
-        ]);
-        listRef?.current?.resetAfterIndex(0);
-      }
-    },
-    [
-      listRef,
-      scaleDates,
-      setScaleDates,
-      settings.dimension,
-      settings.scaleStepItems,
-      settings.stepWidth,
-      wrapRef,
-    ]
-  );
+        if (scrollOffset < GanttConsts.MIN_SCROLL_OFFSET) {
+          // const newDate = dayjs.unix(scaleDates[0]).subtract(1, unitOfTime);
+          let newItemWidth = relSettings.scaleStepItems * relSettings.stepWidth;
 
-  const onItemsRendered = useCallback(
-    (renderedState: ListOnItemsRenderedProps) => {
-      setScaleRenderState(renderedState);
-    },
-    [setScaleRenderState]
-  );
+          if (relSettings.dimension === RelativeGanttDimensions.HOUR) {
+            newItemWidth = relSettings.stepWidth;
+          }
 
-  useEffect(() => {
-    listRef?.current?.resetAfterIndex(0);
-  }, [listRef, settings.dimension]);
+          setScaleDates([...scaleDates]);
 
-  return (
-    <div className="gantt-scale-wrap">
-      <List
-        className="gantt-scale-list"
-        layout="horizontal"
-        width={width}
-        height={GanttConsts.HEADER_HEIGHT}
-        itemCount={scaleDates.length}
-        itemSize={getItemSize}
-        itemData={scaleDates}
-        ref={listRef}
-        outerRef={outerRef}
-        innerRef={innerRef}
-        initialScrollOffset={settings.initialScrollOffset}
-        onScroll={onScroll}
-        onItemsRendered={onItemsRendered}
-      >
-        {({ style, index, data }) => {
-          console.log('data-indx', data);
-          return (
-            <div className="gantt-scale-item" style={style}>
-              <div className="gantt-scale-steps">
-                {getRelativeScale(settings.dimension, data[index]).map((item) => (
-                  <div
-                    className="gantt-scale-step"
-                    key={item}
-                    style={{ width: settings.stepWidth }}
-                  >
-                    {item}
-                  </div>
-                ))}
+          wrapRef.current?.scrollTo({ left: scrollOffset + newItemWidth });
+          listRef?.current?.resetAfterIndex(0);
+        }
+
+        if (
+          (outerRef.current?.scrollWidth || 0) -
+            (outerRef.current?.clientWidth || 0) -
+            scrollOffset -
+            GanttConsts.TREE_WIDTH <
+          GanttConsts.MIN_SCROLL_OFFSET
+        ) {
+          setScaleDates([...scaleDates]);
+          listRef?.current?.resetAfterIndex(0);
+        }
+      },
+      [
+        listRef,
+        scaleDates,
+        setScaleDates,
+        relSettings.dimension,
+        relSettings.scaleStepItems,
+        relSettings.stepWidth,
+        wrapRef,
+      ]
+    );
+
+    const onItemsRendered = useCallback(
+      (renderedState: ListOnItemsRenderedProps) => {
+        setScaleRenderState(renderedState);
+      },
+      [setScaleRenderState]
+    );
+
+    useEffect(() => {
+      listRef?.current?.resetAfterIndex(0);
+    }, [listRef, relSettings.dimension]);
+
+    return (
+      <div className="gantt-scale-wrap">
+        <List
+          className="gantt-scale-list"
+          layout="horizontal"
+          width={width}
+          height={GanttConsts.HEADER_HEIGHT}
+          itemCount={scaleDates.length}
+          itemSize={getItemSize}
+          itemData={scaleDates}
+          ref={listRef}
+          outerRef={outerRef}
+          innerRef={innerRef}
+          initialScrollOffset={relSettings.initialScrollOffset}
+          onScroll={onScroll}
+          onItemsRendered={onItemsRendered}
+        >
+          {({ style, index }) => {
+            console.log(width, relSettings.stepWidth, 'settings');
+            return (
+              <div className="gantt-scale-item" style={style}>
+                <div className="gantt-scale-title">
+                  {/* {dayjs
+                    .unix(data[index])
+                    .format(
+                      relSettings.dimension === RelativeGanttDimensions.HOUR
+                        ? 'MMMM, YYYY'
+                        : 'ddd, D MMMM, YY'
+                    )} */}
+                </div>
+                <div className="gantt-scale-steps">
+                  {getRelativeScale(data, relSettings.dimension).map((item) => (
+                    <div
+                      className="gantt-scale-step"
+                      key={item}
+                      style={{ width: relSettings.stepWidth }}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        }}
-      </List>
-    </div>
-  );
-});
+            );
+          }}
+        </List>
+      </div>
+    );
+  }
+);
 
 RelativeScale.displayName = 'RelativeScale';
 

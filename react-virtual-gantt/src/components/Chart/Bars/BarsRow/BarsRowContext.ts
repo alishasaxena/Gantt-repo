@@ -10,3 +10,13 @@ export const BarsRowContext = createContext<BarsRowContextType>({
     color: '',
   },
 });
+
+export const RelBarsRowContext = createContext<BarsRowContextType>({
+  barData: {
+    key: '',
+    title: '',
+    level: 0,
+    parentsKeys: [''],
+    color: '',
+  },
+});

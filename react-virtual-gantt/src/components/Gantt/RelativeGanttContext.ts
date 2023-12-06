@@ -6,16 +6,16 @@ export const RelGanttContext = createContext<RelGanttContextType>({
   wrapRef: { current: null },
   scaleDates: [],
   setScaleDates: () => {},
-  settings: {
+  relSettings: {
     stepWidth: 0,
     secondsInPixel: 0,
     scaleStepItems: 0,
     initialScrollOffset: 0,
-    dimension: RelativeGanttDimensions.HOURS,
+    dimension: RelativeGanttDimensions.HOUR,
     dragStepSize: DragStepSizes.THIRTY_MIN,
     gridSize: 0,
   },
-  setSettings: () => {},
+  setRelSettings: () => {},
   scaleRenderState: {
     overscanStartIndex: 0,
     overscanStopIndex: 0,

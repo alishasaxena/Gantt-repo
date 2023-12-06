@@ -47,7 +47,7 @@ const Tree = forwardRef<List, TreeProps>(({ height, data, setData }, ref) => {
       className="gantt-tree-wrap"
       style={{
         width: GanttConsts.TREE_WIDTH,
-        marginTop: -GanttConsts.HEADER_HEIGHT,
+        marginTop: '-66px',
       }}
     >
       <List

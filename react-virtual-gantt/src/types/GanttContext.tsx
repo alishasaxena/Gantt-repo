@@ -19,8 +19,8 @@ export interface RelGanttContextType {
   wrapRef: RefObject<HTMLDivElement>;
   scaleDates: number[];
   setScaleDates: Dispatch<SetStateAction<number[]>>;
-  settings: RelGanttSettingsType;
-  setSettings: Dispatch<SetStateAction<RelGanttSettingsType>>;
+  relSettings: RelGanttSettingsType;
+  setRelSettings: Dispatch<SetStateAction<RelGanttSettingsType>>;
   scaleRenderState: ListOnItemsRenderedProps;
   setScaleRenderState: Dispatch<SetStateAction<ListOnItemsRenderedProps>>;
   currentDate: number;

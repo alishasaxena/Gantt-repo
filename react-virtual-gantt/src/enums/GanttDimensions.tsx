@@ -10,7 +10,7 @@ export enum GanttDimensions {
 }
 
 export enum RelativeGanttDimensions {
-  HOURS = 'hours',
+  HOUR = 'hour',
   SECOND = 'second',
   MINUTE = 'minute',
 }

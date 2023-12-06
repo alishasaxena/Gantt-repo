@@ -42,7 +42,7 @@ export const useGanttCalculate = () => {
 };
 // mycode
 export const useRelativeGanttCalculate = () => {
-  const { setScaleDates, wrapRef, settings, setSettings, currentDate } =
+  const { setScaleDates, wrapRef, relSettings, setRelSettings, currentDate } =
     useContext(RelGanttContext);
 
   const relativeCalculate = useCallback(
@@ -52,22 +52,22 @@ export const useRelativeGanttCalculate = () => {
 
       const newScaleDates = getScaleDates(currentDate, itemsCount, unitOfTime);
       const initialScrollOffset = relGetInitialScrollOffset(dimension, newScaleDates, currentDate);
-      const gridSize = DragStepOptions[settings.dragStepSize].seconds / secondsInPixel;
+      const gridSize = DragStepOptions[relSettings.dragStepSize].seconds / secondsInPixel;
 
-      setSettings({
+      setRelSettings({
         stepWidth,
         initialScrollOffset,
         scaleStepItems,
         secondsInPixel,
         dimension,
-        dragStepSize: settings.dragStepSize,
+        dragStepSize: relSettings.dragStepSize,
         gridSize,
       });
       setScaleDates(newScaleDates);
 
       wrapRef.current?.scrollTo({ left: initialScrollOffset });
     },
-    [currentDate, setScaleDates, setSettings, settings.dragStepSize, wrapRef]
+    [currentDate, setScaleDates, setRelSettings, relSettings.dragStepSize, wrapRef]
   );
 
   return { relativeCalculate };

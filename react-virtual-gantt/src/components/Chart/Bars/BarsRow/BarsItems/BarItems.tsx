@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import BarItem from '../BarItem';
 import RepeteadBars from '../RepeteadBars';
@@ -32,8 +32,6 @@ const BarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBarDoubleC
       if (!ele) {
         return null;
       }
-
-      console.log(ele, 'tusharData');
 
       if (ele.repeatType) {
         return (

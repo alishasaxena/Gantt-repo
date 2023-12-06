@@ -27,7 +27,7 @@ const Controls: React.FC<ControlsProps> = ({ className, isRelative }) => {
   const [dimensionIndex, setDimensionIndex] = useState(0);
   // mycode
   const [relativeDimensionValue, setRelativeDimensionValue] = useState(
-    RelativeGanttDimensions.HOURS
+    RelativeGanttDimensions.HOUR
   );
   const [relativedimensionIndex, setRelativeDimensionIndex] = useState(0);
 
@@ -45,7 +45,7 @@ const Controls: React.FC<ControlsProps> = ({ className, isRelative }) => {
     return Object.keys(RelativeGanttDimensionSettings).map((key, index) => {
       return {
         label: RelativeGanttDimensionSettings[key as RelativeGanttDimensions].label,
-        value: key as GanttDimensions,
+        value: key as RelativeGanttDimensions,
         index,
       };
     });
@@ -60,7 +60,6 @@ const Controls: React.FC<ControlsProps> = ({ className, isRelative }) => {
       setRelativeDimensionValue(value);
       setRelativeDimensionIndex(index);
       relativeCalculate(value);
-      console.log(relativeDimensionValue, 'rel');
     },
     [relativeCalculate, relativeDimensionOptions]
   );

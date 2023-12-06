@@ -115,7 +115,7 @@ const Scale = forwardRef<List<number[]>, ScaleProps>(({ width, wrapRef }, ref) =
         onItemsRendered={onItemsRendered}
       >
         {({ style, index, data }) => {
-          console.log(scaleDates, 'settings');
+          console.log(width, settings.stepWidth, 'settings');
           return (
             <div className="gantt-scale-item" style={style}>
               <div className="gantt-scale-title">
