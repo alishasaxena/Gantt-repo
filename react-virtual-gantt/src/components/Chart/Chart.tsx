@@ -79,7 +79,7 @@ export const Chart: React.FC<ChartProps> = ({ data, className, onBarDoubleClick,
   }, [data]);
 
   useEffect(() => {
-    console.log('chart.tx');
+    console.log('chart.tx', scaleDates);
   }, [transformData]);
 
   return (
@@ -135,7 +135,7 @@ export const RelativeChart: React.FC<ChartProps> = ({
   useEffect(() => {
     console.log(data, 'RelativeData');
   }, []);
-  const { relSettings, scaleDates, wrapRef, setCurrentDate } = useContext(RelGanttContext);
+  const { relSettings, relScaleDates, wrapRef, setRelCurrentDate } = useContext(RelGanttContext);
 
   const scaleRef = useRef<List>(null);
   const treeRef = useRef<List>(null);
@@ -151,8 +151,8 @@ export const RelativeChart: React.FC<ChartProps> = ({
         RelativeGanttDimensionSettings[relSettings.dimension].secondsInPixel
     );
 
-    setCurrentDate(scaleDates[0] + secondsDiff);
-  }, [scaleDates, setCurrentDate, relSettings.dimension, wrapRef]);
+    setRelCurrentDate(relScaleDates[0] + secondsDiff);
+  }, [relScaleDates, setRelCurrentDate, relSettings.dimension, wrapRef]);
 
   const debounceSetCurrentDate = useMemo(() => {
     return debounce(setNewCurrentDate, 100);
@@ -169,7 +169,7 @@ export const RelativeChart: React.FC<ChartProps> = ({
 
   useEffect(() => {
     if (!loading && wrapRef.current) {
-      wrapRef.current.scrollLeft = relSettings.initialScrollOffset;
+      wrapRef.current.scrollLeft = relSettings.relInitialScrollOffset;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
@@ -203,22 +203,26 @@ export const RelativeChart: React.FC<ChartProps> = ({
       ) : (
         <>
           <>
-            <RelativeScale width={width} wrapRef={wrapRef} ref={scaleRef} data={data} />
-            <Tree
-              height={height}
-              data={transformedData}
-              setData={setTransformedData}
-              ref={treeRef}
-            />
-            <RelativeBars
-              ref={barsRef}
-              data={transformedData}
-              setData={setTransformedData}
-              width={width}
-              height={height}
-              onBarDoubleClick={onBarDoubleClick}
-              onBarChange={onBarChange}
-            />
+            <div className="newBars">
+              <Tree
+                height={height}
+                data={transformedData}
+                setData={setTransformedData}
+                ref={treeRef}
+              />
+              <div className="newBarsRight">
+                <RelativeScale width={width} wrapRef={wrapRef} ref={scaleRef} data={data} />
+                <RelativeBars
+                  ref={barsRef}
+                  data={transformedData}
+                  setData={setTransformedData}
+                  width={width}
+                  height={height}
+                  onBarDoubleClick={onBarDoubleClick}
+                  onBarChange={onBarChange}
+                />
+              </div>
+            </div>
           </>
         </>
       )}

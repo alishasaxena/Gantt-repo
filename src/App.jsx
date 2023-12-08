@@ -127,6 +127,7 @@ function App() {
 
   return (
     <GanttComponent/>
+    // <div>htfythf</div>
   )
 
   // return (

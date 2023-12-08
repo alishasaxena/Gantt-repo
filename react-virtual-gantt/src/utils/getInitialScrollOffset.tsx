@@ -17,13 +17,13 @@ export const getInitialScrollOffset = (
 
 export const relGetInitialScrollOffset = (
   dimension: RelativeGanttDimensions,
-  scaleDates: number[],
-  currentDate?: number
+  relScaleDates: number[],
+  relCurrentDate?: number
 ) => {
   const { secondsInPixel, unitOfTime } = RelativeGanttDimensionSettings[dimension];
 
   const secondsBeforeCurrentDate =
-    (currentDate || dayjs().unix()) - dayjs.unix(scaleDates[0]).startOf(unitOfTime).unix();
+    (relCurrentDate || dayjs().unix()) - dayjs.unix(relScaleDates[0]).startOf(unitOfTime).unix();
 
   return Math.round(secondsBeforeCurrentDate / secondsInPixel) - GanttConsts.TREE_WIDTH;
 };

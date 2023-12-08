@@ -4,13 +4,13 @@ import { RelGanttContextType } from '../../types';
 
 export const RelGanttContext = createContext<RelGanttContextType>({
   wrapRef: { current: null },
-  scaleDates: [],
-  setScaleDates: () => {},
+  relScaleDates: [],
+  setRelScaleDates: () => {},
   relSettings: {
     stepWidth: 0,
     secondsInPixel: 0,
     scaleStepItems: 0,
-    initialScrollOffset: 0,
+    relInitialScrollOffset: 0,
     dimension: RelativeGanttDimensions.HOUR,
     dragStepSize: DragStepSizes.THIRTY_MIN,
     gridSize: 0,
@@ -23,6 +23,6 @@ export const RelGanttContext = createContext<RelGanttContextType>({
     visibleStopIndex: 0,
   },
   setScaleRenderState: () => {},
-  currentDate: 0,
-  setCurrentDate: () => 0,
+  relCurrentDate: 0,
+  setRelCurrentDate: () => 0,
 });

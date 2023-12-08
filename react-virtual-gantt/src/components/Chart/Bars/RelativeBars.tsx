@@ -14,7 +14,7 @@ import { createSnapModifier, restrictToHorizontalAxis } from '@dnd-kit/modifiers
 import dayjs from 'dayjs';
 import { VariableSizeList as List } from 'react-window';
 import { RelGanttContext } from '../../Gantt/RelativeGanttContext';
-import { getRelWholeWidth, getWholeWidth } from '../../../utils';
+import { getRelWholeWidth } from '../../../utils';
 import { DragTypes } from '../../../enums';
 import { GanttConsts } from '../../../constants';
 import { GanttItemDataType, OnBarChangeType, OnBarDoubleClickType } from '../../../types';
@@ -45,16 +45,16 @@ const InnerElement: React.FC<InnerElementProps> = ({ scaleWidth, style, children
 };
 const RelativeBars = forwardRef<List, BarsProps>(
   ({ width, height, data, setData, onBarDoubleClick, onBarChange }, ref) => {
-    const { relSettings, scaleDates } = useContext(RelGanttContext);
+    const { relSettings, relScaleDates } = useContext(RelGanttContext);
 
     const scaleWidth = useMemo(() => {
       return getRelWholeWidth(
-        scaleDates,
+        relScaleDates,
         relSettings.dimension,
         relSettings.scaleStepItems,
         relSettings.stepWidth
       );
-    }, [scaleDates, relSettings.dimension, relSettings.scaleStepItems, relSettings.stepWidth]);
+    }, [relScaleDates, relSettings.dimension, relSettings.scaleStepItems, relSettings.stepWidth]);
 
     const snapToGrid = useMemo(
       () => createSnapModifier(relSettings.gridSize),
@@ -208,8 +208,11 @@ const RelativeBars = forwardRef<List, BarsProps>(
       [data, onBarChange, setData, relSettings.gridSize, relSettings.secondsInPixel]
     );
 
+    useEffect(() => {
+      console.log(scaleWidth, 'scaleWidth');
+    });
     return (
-      <div className="gantt-bars-wrap">
+      <div className="rel-gantt-bars-wrap">
         <DndContext
           modifiers={[restrictToHorizontalAxis, snapToGrid]}
           onDragEnd={onDragEnd}

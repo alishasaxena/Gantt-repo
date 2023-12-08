@@ -1,11 +1,11 @@
-import React, { ReactNode, useMemo, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { ListOnItemsRenderedProps } from 'react-window';
 import { Chart, RelativeChart } from '../Chart';
 import Controls from '../Controls';
 import { GanttContext } from './GanttContext';
-import { getInitialScrollOffset, getScaleDates } from '../../utils';
+import { getInitialScrollOffset, getScaleDates, relGetInitialScrollOffset } from '../../utils';
 import { DragStepSizes, GanttDimensions, RelativeGanttDimensions } from '../../enums';
 import { GanttSettingsType, RelGanttSettingsType } from '../../types';
 import {
@@ -16,20 +16,18 @@ import {
 } from '../../constants';
 import '../../styles/globals.css';
 import './Gantt.css';
-import { RelGanttContext } from './RelativeGanttContext';
+import { getRelativeDates } from '../../utils/getRelativeDates';
 
 dayjs.extend(localizedFormat);
 
 type GanttProps = {
   children: ReactNode | ReactNode[];
-  relativeMode: boolean;
 };
 
-const Gantt: React.FC<GanttProps> & {
+export const Gantt: React.FC<GanttProps> & {
   Chart: typeof Chart;
-  RelativeChart: typeof RelativeChart;
   Controls: typeof Controls;
-} = ({ children, relativeMode }: GanttProps) => {
+} = ({ children }: GanttProps) => {
   const initialScaleDates = useMemo(() => {
     return getScaleDates();
   }, []);
@@ -55,17 +53,6 @@ const Gantt: React.FC<GanttProps> & {
   });
   // my code
 
-  const [relSettings, setRelSettings] = useState<RelGanttSettingsType>({
-    stepWidth: RelativeGanttDimensionSettings[RelativeGanttDimensions.HOUR].stepWidth,
-    secondsInPixel: RelativeGanttDimensionSettings[RelativeGanttDimensions.HOUR].secondsInPixel,
-    scaleStepItems: GanttConsts.HOURS_IN_DAY,
-    initialScrollOffset,
-    dimension: RelativeGanttDimensions.HOUR,
-    dragStepSize: DragStepSizes.THIRTY_MIN,
-    gridSize:
-      DragStepOptions[DragStepSizes.THIRTY_MIN].seconds /
-      RelativeGanttDimensionSettings[RelativeGanttDimensions.HOUR].secondsInPixel,
-  });
   const [scaleRenderState, setScaleRenderState] = useState<ListOnItemsRenderedProps>({
     overscanStartIndex: 0,
     overscanStopIndex: 0,
@@ -73,41 +60,7 @@ const Gantt: React.FC<GanttProps> & {
     visibleStopIndex: 0,
   });
 
-  // return (
-  //   <GanttContext.Provider
-  //     value={{
-  //       wrapRef,
-  //       scaleDates,
-  //       setScaleDates,
-  //       settings,
-  //       setSettings,
-  //       scaleRenderState,
-  //       setScaleRenderState,
-  //       currentDate,
-  //       setCurrentDate,
-  //     }}
-  //   >
-  //     <div className="gantt-wrap">{children}</div>
-  //   </GanttContext.Provider>
-  // );
-
-  return relativeMode ? (
-    <RelGanttContext.Provider
-      value={{
-        wrapRef,
-        scaleDates,
-        setScaleDates,
-        relSettings,
-        setRelSettings,
-        scaleRenderState,
-        setScaleRenderState,
-        currentDate,
-        setCurrentDate,
-      }}
-    >
-      <div className="gantt-wrap">{children}</div>
-    </RelGanttContext.Provider>
-  ) : (
+  return (
     <GanttContext.Provider
       value={{
         wrapRef,
@@ -127,7 +80,4 @@ const Gantt: React.FC<GanttProps> & {
 };
 
 Gantt.Chart = Chart;
-Gantt.RelativeChart = RelativeChart;
 Gantt.Controls = Controls;
-
-export default Gantt;

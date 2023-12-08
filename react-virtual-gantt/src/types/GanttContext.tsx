@@ -17,14 +17,14 @@ export interface GanttContextType {
 
 export interface RelGanttContextType {
   wrapRef: RefObject<HTMLDivElement>;
-  scaleDates: number[];
-  setScaleDates: Dispatch<SetStateAction<number[]>>;
+  relScaleDates: number[];
+  setRelScaleDates: Dispatch<SetStateAction<number[]>>;
   relSettings: RelGanttSettingsType;
   setRelSettings: Dispatch<SetStateAction<RelGanttSettingsType>>;
   scaleRenderState: ListOnItemsRenderedProps;
   setScaleRenderState: Dispatch<SetStateAction<ListOnItemsRenderedProps>>;
-  currentDate: number;
-  setCurrentDate: Dispatch<SetStateAction<number>>;
+  relCurrentDate: number;
+  setRelCurrentDate: Dispatch<SetStateAction<number>>;
 }
 
 export interface BarsRowContextType {

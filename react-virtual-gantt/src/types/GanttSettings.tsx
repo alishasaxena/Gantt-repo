@@ -14,7 +14,7 @@ export interface RelGanttSettingsType {
   stepWidth: number;
   secondsInPixel: number;
   scaleStepItems: number;
-  initialScrollOffset: number;
+  relInitialScrollOffset: number;
   dimension: RelativeGanttDimensions;
   dragStepSize: DragStepSizes;
   gridSize: number;

@@ -18,18 +18,14 @@ export const getWholeWidth = (
 };
 
 export const getRelWholeWidth = (
-  scaleDates: number[],
+  relScaleDates: any,
   dimension: RelativeGanttDimensions,
   stepItemsCount: number,
   stepWidth: number
 ) => {
-  console.log(stepWidth * scaleDates.length * stepItemsCount * stepWidth, 'heyyy');
+  console.log(stepWidth, 'stepwidth', stepItemsCount);
   if (dimension === RelativeGanttDimensions.HOUR) {
-    return (
-      stepWidth *
-      scaleDates.reduce((acc: number, date: number) => acc + dayjs.unix(date).daysInMonth(), 0)
-    );
+    return stepWidth * relScaleDates.length;
   }
-
-  return scaleDates.length * stepItemsCount * stepWidth;
+  return relScaleDates.length * stepItemsCount;
 };

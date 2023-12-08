@@ -5,6 +5,10 @@
   width: 100%;
 }
 
+.rel-gantt-bars-wrap {
+  width: 100%;
+}
+
 .gantt-bars-list {
   margin-top: 50px;
   overflow: visible !important;
