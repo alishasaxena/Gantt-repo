@@ -22,6 +22,7 @@ import {
 import './Chart.css';
 import RelativeScale from './Scale/RelativeScale';
 import RelativeBars from './Bars/RelativeBars';
+import RelativeTree from './Tree/RelativeTree';
 
 interface ChartProps {
   data: GanttDataType[];
@@ -179,12 +180,13 @@ export const RelativeChart: React.FC<ChartProps> = ({
   }, [data]);
 
   useEffect(() => {
-    console.log('chart.tx');
+    console.log('chart.tx', width);
   }, [transformData]);
 
   return (
     <div
       className={cn('gantt-chart-wrap', className)}
+      style={{ display: 'flex', overflow: 'scroll' }}
       ref={wrapRef}
       onScroll={(evt) => {
         barsRef.current?.scrollTo(evt.currentTarget.scrollTop);
@@ -202,28 +204,24 @@ export const RelativeChart: React.FC<ChartProps> = ({
         />
       ) : (
         <>
-          <>
-            <div className="newBars">
-              <Tree
-                height={height}
-                data={transformedData}
-                setData={setTransformedData}
-                ref={treeRef}
-              />
-              <div className="newBarsRight">
-                <RelativeScale width={width} wrapRef={wrapRef} ref={scaleRef} data={data} />
-                <RelativeBars
-                  ref={barsRef}
-                  data={transformedData}
-                  setData={setTransformedData}
-                  width={width}
-                  height={height}
-                  onBarDoubleClick={onBarDoubleClick}
-                  onBarChange={onBarChange}
-                />
-              </div>
-            </div>
-          </>
+          <RelativeTree
+            height={height}
+            data={transformedData}
+            setData={setTransformedData}
+            ref={treeRef}
+          />
+          <div>
+            <RelativeScale width={width} wrapRef={wrapRef} ref={scaleRef} data={data} />
+            <RelativeBars
+              ref={barsRef}
+              data={transformedData}
+              setData={setTransformedData}
+              width={width}
+              height={height}
+              onBarDoubleClick={onBarDoubleClick}
+              onBarChange={onBarChange}
+            />
+          </div>
         </>
       )}
     </div>

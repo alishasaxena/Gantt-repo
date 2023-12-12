@@ -209,7 +209,7 @@ const RelativeBars = forwardRef<List, BarsProps>(
     );
 
     useEffect(() => {
-      console.log(scaleWidth, 'scaleWidth');
+      console.log(width, 'zoomba');
     });
     return (
       <div className="rel-gantt-bars-wrap">
@@ -221,8 +221,9 @@ const RelativeBars = forwardRef<List, BarsProps>(
           <List
             ref={ref}
             className="gantt-bars-list"
+            style={{ marginTop: '0' }}
             layout="vertical"
-            width={100}
+            width={width}
             height={height}
             itemCount={barsData.length}
             itemSize={itemSize}

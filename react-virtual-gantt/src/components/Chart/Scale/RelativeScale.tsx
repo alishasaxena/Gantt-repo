@@ -59,7 +59,7 @@ const RelativeScale = forwardRef<List<number[]>, RelativeScaleProps>(
 
     const getItemSize = (index: number) => columnWidths[50];
     const Column: React.FC<ColumnProps> = ({ index, style }) => (
-      <div style={style} className="relitem">
+      <div style={style} className="gantt-scale-step">
         {index}
       </div>
     );
@@ -131,7 +131,8 @@ const RelativeScale = forwardRef<List<number[]>, RelativeScaleProps>(
     return (
       <div className="gantt-scale-wrap">
         <List
-          className="rel-gantt-scale-list "
+          className="gantt-scale-list"
+          style={{ backgroundColor: 'white' }}
           layout="horizontal"
           width={scaleWidth}
           height={GanttConsts.HEADER_HEIGHT}
@@ -144,7 +145,11 @@ const RelativeScale = forwardRef<List<number[]>, RelativeScaleProps>(
           onItemsRendered={onItemsRendered}
         >
           {({ index, style }) => {
-            return <Column index={index} style={style} />;
+            return (
+              <div className="gantt-scale-item">
+                <Column index={index} style={style} />
+              </div>
+            );
           }}
         </List>
       </div>

@@ -11,7 +11,7 @@ interface TreeProps {
   setData: Dispatch<SetStateAction<GanttItemDataType[]>>;
 }
 
-const Tree = forwardRef<List, TreeProps>(({ height, data, setData }, ref) => {
+const RelativeTree = forwardRef<List, TreeProps>(({ height, data, setData }, ref) => {
   const treeData = useMemo(() => {
     const collapsedKeys: string[] = [];
 
@@ -47,7 +47,7 @@ const Tree = forwardRef<List, TreeProps>(({ height, data, setData }, ref) => {
       className="gantt-tree-wrap"
       style={{
         width: GanttConsts.TREE_WIDTH,
-        marginTop: GanttConsts.HEADER_HEIGHT, // code need to be changed back to margin top -66px
+        marginTop: '0', // code need to be changed back to margin top -66px
       }}
     >
       <List
@@ -101,6 +101,6 @@ const Tree = forwardRef<List, TreeProps>(({ height, data, setData }, ref) => {
   );
 });
 
-Tree.displayName = 'Tree';
+RelativeTree.displayName = 'Tree';
 
-export default Tree;
+export default RelativeTree;

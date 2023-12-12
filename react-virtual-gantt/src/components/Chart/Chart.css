@@ -6,10 +6,3 @@
   width: 100%;
   overflow-x: auto;
 }
-.newBars {
-  display: flex;
-}
-.newBarsRight {
-  max-width: 1100px;
-  overflow: scroll;
-}
