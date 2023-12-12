@@ -21,7 +21,7 @@ const RelativeBarsRow: React.FC<BarsRowProps> = ({ barData, index, style, onBarD
       ...style,
       backgroundImage: `repeating-linear-gradient(to right, var(--gantt-border-color-base) 0px 1px, ${
         index % 2 === 0 ? 'var(--gantt-background-second)' : 'var(--gantt-background-main)'
-      } 1px ${relSettings.stepWidth}px`,
+      } 1px ${relSettings.stepWidth + 1}px`,
     };
   }, [index, relSettings.stepWidth, style]);
 
@@ -30,7 +30,7 @@ const RelativeBarsRow: React.FC<BarsRowProps> = ({ barData, index, style, onBarD
   });
   return (
     <RelBarsRowContext.Provider value={{ barData }}>
-      <div className="gantt-bars-row-wrap" style={wrapStyle}>
+      <div className="rel-gantt-bars-row-wrap" style={wrapStyle}>
         <RelativeBarItems
           data={barData.data}
           title={barData.title}

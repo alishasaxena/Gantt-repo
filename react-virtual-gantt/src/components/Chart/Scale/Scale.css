@@ -34,3 +34,12 @@
   border-right: none;
   padding: 24px;
 }
+
+.rel-gantt-scale-step {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--gantt-border-color-base);
+  border-right: none;
+  width: 50px !important;
+}

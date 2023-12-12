@@ -41,7 +41,8 @@ const RelativeBarItem = memo<BarItemProps>(
     }, [repetead, relSettings.secondsInPixel]);
 
     const startPosition = useMemo(() => {
-      return startDate - relScaleDates[0];
+      console.log('position', startDate, relScaleDates);
+      return startDate * relSettings.stepWidth;
     }, [relScaleDates, relSettings.secondsInPixel, startDate]);
 
     const activeDragType = useMemo(() => {

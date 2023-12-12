@@ -59,7 +59,7 @@ const RelativeScale = forwardRef<List<number[]>, RelativeScaleProps>(
 
     const getItemSize = (index: number) => columnWidths[50];
     const Column: React.FC<ColumnProps> = ({ index, style }) => (
-      <div style={style} className="gantt-scale-step">
+      <div className="rel-gantt-scale-step" style={style}>
         {index}
       </div>
     );
@@ -147,7 +147,7 @@ const RelativeScale = forwardRef<List<number[]>, RelativeScaleProps>(
           {({ index, style }) => {
             return (
               <div className="gantt-scale-item">
-                <Column index={index} style={style} />
+                <Column index={index + 1} style={style} />
               </div>
             );
           }}
