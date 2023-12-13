@@ -8,7 +8,7 @@ import {
 import { GanttContext } from '../../Gantt/GanttContext';
 import { useForwardRef } from '../../../hooks';
 import { getScaleItems } from '../../../utils';
-import { GanttDimensions, RelativeGanttDimensions } from '../../../enums';
+import { GanttDimensions } from '../../../enums';
 import { GanttConsts, GanttDimensionsSettings } from '../../../constants';
 import './Scale.css';
 
@@ -115,7 +115,6 @@ const Scale = forwardRef<List<number[]>, ScaleProps>(({ width, wrapRef }, ref) =
         onItemsRendered={onItemsRendered}
       >
         {({ style, index, data }) => {
-          console.log(width, settings.stepWidth, 'settings');
           return (
             <div className="gantt-scale-item" style={style}>
               <div className="gantt-scale-title">

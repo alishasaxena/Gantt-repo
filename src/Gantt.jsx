@@ -69,7 +69,28 @@ const tasks = [
 //         },
 //       ];
 
-
+const newList = [
+    {
+        "key": "CompletedKENNJump",
+        "title": "Task CompletedKENNJump",
+        "data": [
+            {
+                "startDate": 34,
+                "endDate": 38
+            }
+        ]
+    },
+    {
+        "key": "wi--by-636-base--RestartVsNewKENNActions",
+        "title": "Task wi--by-636-base--RestartVsNewKENNActions",
+        "data": [
+            {
+                "startDate": 35,
+                "endDate": 35
+            }
+        ]
+    },
+  ]
 const list = [
     {
         "key": "CompletedKENNJump",

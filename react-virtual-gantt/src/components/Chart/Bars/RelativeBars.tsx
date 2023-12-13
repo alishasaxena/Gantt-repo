@@ -231,6 +231,7 @@ const RelativeBars = forwardRef<List, BarsProps>(
             innerElementType={(props) => <InnerElement scaleWidth={scaleWidth} {...props} />}
           >
             {({ style, data, index }) => {
+              console.log('style', style);
               return (
                 <RelativeBarsRow
                   barData={data[index]}

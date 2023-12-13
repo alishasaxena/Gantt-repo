@@ -26,7 +26,7 @@ const RelativeBarsRow: React.FC<BarsRowProps> = ({ barData, index, style, onBarD
   }, [index, relSettings.stepWidth, style]);
 
   useEffect(() => {
-    console.log(barData, 'alisha');
+    console.log(barData, 'bardata');
   });
   return (
     <RelBarsRowContext.Provider value={{ barData }}>

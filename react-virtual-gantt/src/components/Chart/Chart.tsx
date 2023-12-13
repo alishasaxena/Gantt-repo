@@ -33,11 +33,6 @@ interface ChartProps {
 
 export const Chart: React.FC<ChartProps> = ({ data, className, onBarDoubleClick, onBarChange }) => {
   const { settings, scaleDates, wrapRef, setCurrentDate } = useContext(GanttContext);
-
-  useEffect(() => {
-    console.log(data, ':Data');
-  }, []);
-
   const scaleRef = useRef<List>(null);
   const treeRef = useRef<List>(null);
   const barsRef = useRef<List>(null);
@@ -79,10 +74,6 @@ export const Chart: React.FC<ChartProps> = ({ data, className, onBarDoubleClick,
     setTransformedData(transformData(data));
   }, [data]);
 
-  useEffect(() => {
-    console.log('chart.tx', scaleDates);
-  }, [transformData]);
-
   return (
     <div
       className={cn('gantt-chart-wrap', className)}
@@ -98,29 +89,22 @@ export const Chart: React.FC<ChartProps> = ({ data, className, onBarDoubleClick,
       {loading ? (
         <div
           style={{
-            width: settings.scaleStepItems * settings.stepWidth,
+            width: settings.scaleStepItems * settings.stepWidth * scaleDates.length,
           }}
         />
       ) : (
         <>
-          <>
-            <Scale width={width} wrapRef={wrapRef} ref={scaleRef} /> // normal mode
-            <Tree
-              height={height}
-              data={transformedData}
-              setData={setTransformedData}
-              ref={treeRef}
-            />
-            <Bars
-              ref={barsRef}
-              data={transformedData}
-              setData={setTransformedData}
-              width={width}
-              height={height}
-              onBarDoubleClick={onBarDoubleClick}
-              onBarChange={onBarChange}
-            />
-          </>
+          <Scale width={width} wrapRef={wrapRef} ref={scaleRef} />
+          <Tree height={height} data={transformedData} setData={setTransformedData} ref={treeRef} />
+          <Bars
+            ref={barsRef}
+            data={transformedData}
+            setData={setTransformedData}
+            width={width}
+            height={height}
+            onBarDoubleClick={onBarDoubleClick}
+            onBarChange={onBarChange}
+          />
         </>
       )}
     </div>
@@ -199,7 +183,7 @@ export const RelativeChart: React.FC<ChartProps> = ({
       {loading ? (
         <div
           style={{
-            width: relSettings.scaleStepItems * relSettings.stepWidth,
+            width: relSettings.scaleStepItems * relSettings.stepWidth * relScaleDates.length,
           }}
         />
       ) : (
