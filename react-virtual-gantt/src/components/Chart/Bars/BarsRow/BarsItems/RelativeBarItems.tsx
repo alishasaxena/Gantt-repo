@@ -6,6 +6,7 @@ import { GanttContext } from '../../../../Gantt/GanttContext';
 import { BarItemDataType, OnBarDoubleClickType } from '../../../../../types';
 import { RelGanttContext } from '../../../../Gantt/RelativeGanttContext';
 import RelativeBarItem from '../BarItem/RelativeBarItem';
+import RelativeRepeteadBars from '../RepeteadBars/RelativeRepeatedBars';
 
 interface BarsItemsProps {
   data?: BarItemDataType[];
@@ -76,19 +77,19 @@ interface BarsItemsProps {
 // };
 
 const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBarDoubleClick }) => {
-  const { scaleDates, scaleRenderState } = useContext(RelGanttContext);
+  const { relScaleDates, scaleRenderState } = useContext(RelGanttContext);
 
   useEffect(() => {
     console.log('tushar', data);
   }, []);
 
-  // const firstRenderedDate = useMemo(() => {
-  //   return scaleDates[scaleRenderState.overscanStartIndex];
-  // }, [scaleDates, scaleRenderState.overscanStartIndex]);
+  const firstRenderedDate = useMemo(() => {
+    return relScaleDates[scaleRenderState.overscanStartIndex];
+  }, [relScaleDates, scaleRenderState.overscanStartIndex]);
 
-  // const lastRenderedDate = useMemo(() => {
-  //   return scaleDates[scaleRenderState.overscanStopIndex];
-  // }, [scaleDates, scaleRenderState.overscanStopIndex]);
+  const lastRenderedDate = useMemo(() => {
+    return relScaleDates[scaleRenderState.overscanStopIndex];
+  }, [relScaleDates, scaleRenderState.overscanStopIndex]);
 
   const renderedBars = useMemo(() => {
     return data?.map((ele: any, i: number) => {
@@ -99,6 +100,18 @@ const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBa
 
       if (!ele) {
         return null;
+      }
+
+      if (ele.repeatType) {
+        <RelativeRepeteadBars
+          key={i}
+          data={ele}
+          firstRenderedDate={firstRenderedDate}
+          lastRenderedDate={lastRenderedDate}
+          title={title}
+          barKey={barKey}
+          onBarDoubleClick={onBarDoubleClick}
+        />;
       }
 
       return (
