@@ -130,7 +130,8 @@ const RelativeBarItem = memo<BarItemProps>(
           style={{
             height: '40px',
             top: 0,
-            marginLeft: startPosition,
+            left: startPosition,
+            position: 'absolute',
             width: itemWidth,
             transform: translateStyle,
           }}

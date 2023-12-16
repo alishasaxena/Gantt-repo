@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from 'react';
-import dayjs from 'dayjs';
 import BarItem from '../BarItem';
 import { GanttConsts } from '../../../../../constants';
 import { DataRepeatTypes } from '../../../../../enums';
@@ -25,26 +24,6 @@ const RelativeRepeteadBars: React.FC<RepeteadBarsProps> = ({
   useEffect(() => {
     console.log(data, 'wtfdata');
   }, []);
-  const fromDate = useMemo(() => {
-    if (!firstRenderedDate) {
-      return null;
-    }
-    const date = data.fromDate ? dayjs(data.fromDate).unix() : firstRenderedDate;
-
-    const first = date > firstRenderedDate ? date : firstRenderedDate;
-
-    return first;
-  }, [data.fromDate, firstRenderedDate]);
-
-  const toDate = useMemo(() => {
-    if (!lastRenderedDate) {
-      return null;
-    }
-
-    const date = data.toDate ? dayjs(data.toDate).unix() : lastRenderedDate;
-
-    return date < lastRenderedDate ? date : lastRenderedDate;
-  }, [data.toDate, lastRenderedDate]);
 
   const duration = useMemo(() => {
     return data.toTime < data.fromTime
@@ -53,76 +32,53 @@ const RelativeRepeteadBars: React.FC<RepeteadBarsProps> = ({
   }, [data.fromTime, data.toTime]);
 
   const dates = useMemo(() => {
-    if (!fromDate || !toDate || !duration) {
+    if (!firstRenderedDate || !lastRenderedDate || !duration) {
       return [];
     }
 
     const result = [];
+    let startDate = Math.max(firstRenderedDate, data.fromDate ? data.fromDate : firstRenderedDate);
 
-    let startDate = dayjs.unix(fromDate).startOf('day').add(data.fromTime, 'seconds').unix();
+    while (startDate <= lastRenderedDate) {
+      let isValidDate = false;
 
-    switch (data.repeatType) {
-      case DataRepeatTypes.DAY: {
-        while (startDate <= toDate) {
-          result.push({
-            startDate,
-            endDate: startDate + duration,
-          });
+      switch (data.repeatType) {
+        case DataRepeatTypes.DAY:
+          isValidDate = true;
+          break;
 
-          startDate = startDate + GanttConsts.SECONDS_IN_DAY;
-        }
+        case DataRepeatTypes.WEEK:
+          isValidDate = data.weekdays?.includes(new Date(startDate * 1000).getDay());
+          break;
 
-        break;
+        case DataRepeatTypes.MONTH:
+          isValidDate = data.monthdays?.includes(new Date(startDate * 1000).getDate());
+          break;
+
+        case DataRepeatTypes.CUSTOM:
+          isValidDate = data.customDays?.includes(new Date(startDate * 1000).getDate());
+          break;
+
+        default:
+          isValidDate = true;
       }
 
-      case DataRepeatTypes.WEEK:
-        while (startDate <= toDate) {
-          if (data.weekdays?.includes(+dayjs.unix(startDate).format('d'))) {
-            result.push({
-              startDate,
-              endDate: startDate + duration,
-            });
-          }
+      if (isValidDate) {
+        result.push({
+          startDate,
+          endDate: startDate + duration,
+        });
+      }
 
-          startDate = startDate + GanttConsts.SECONDS_IN_DAY;
-        }
-
-        break;
-
-      case DataRepeatTypes.MONTH:
-        while (startDate <= toDate) {
-          if (data.monthdays?.includes(+dayjs.unix(startDate).format('D'))) {
-            result.push({
-              startDate,
-              endDate: startDate + duration,
-            });
-          }
-
-          startDate = startDate + GanttConsts.SECONDS_IN_DAY;
-        }
-
-        break;
-
-      case DataRepeatTypes.CUSTOM:
-        while (startDate <= toDate) {
-          if (data.monthdays?.includes(+dayjs.unix(startDate).format('D'))) {
-            result.push({
-              startDate,
-              endDate: startDate + duration,
-            });
-          }
-
-          startDate = startDate + GanttConsts.SECONDS_IN_DAY;
-        }
-
-        break;
+      startDate += GanttConsts.SECONDS_IN_DAY;
     }
+
     console.log(result, 'alisha');
 
     return result;
-  }, [data, duration, fromDate, toDate]);
+  }, [data, duration, firstRenderedDate, lastRenderedDate]);
 
-  if (!fromDate || !toDate) {
+  if (!dates.length) {
     return null;
   }
 

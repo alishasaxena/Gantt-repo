@@ -9,72 +9,11 @@ import RelativeBarItem from '../BarItem/RelativeBarItem';
 import RelativeRepeteadBars from '../RepeteadBars/RelativeRepeatedBars';
 
 interface BarsItemsProps {
-  data?: BarItemDataType[];
+  data?: any;
   title: string;
   barKey: string;
   onBarDoubleClick?: OnBarDoubleClickType;
 }
-
-// const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBarDoubleClick }) => {
-//   const { scaleDates, scaleRenderState } = useContext(RelGanttContext);
-
-//   useEffect(() => {
-//     console.log('tushar', data);
-//   }, []);
-
-//   const firstRenderedDate = useMemo(() => {
-//     return scaleDates[scaleRenderState.overscanStartIndex];
-//   }, [scaleDates, scaleRenderState.overscanStartIndex]);
-
-//   const lastRenderedDate = useMemo(() => {
-//     return scaleDates[scaleRenderState.overscanStopIndex];
-//   }, [scaleDates, scaleRenderState.overscanStopIndex]);
-
-//   const renderedBars = useMemo(() => {
-//     return data?.map((ele: BarItemDataType, i: number) => {
-//       const startDate = dayjs(ele?.startDate).unix();
-//       const endDate = dayjs(ele?.endDate).unix();
-
-//       console.log('fgh', startDate, endDate);
-
-//       if (!ele) {
-//         return null;
-//       }
-
-//       if (ele.repeatType) {
-//         return (
-//           <RepeteadBars
-//             key={i}
-//             data={ele}
-//             firstRenderedDate={firstRenderedDate}
-//             lastRenderedDate={lastRenderedDate}
-//             title={title}
-//             barKey={barKey}
-//             onBarDoubleClick={onBarDoubleClick}
-//           />
-//         );
-//       }
-
-//       if (startDate > lastRenderedDate || endDate < firstRenderedDate) {
-//         return null;
-//       }
-
-//       return (
-//         <RelativeBarItem
-//           key={ele.startDate}
-//           title={title}
-//           barKey={barKey}
-//           startDate={startDate}
-//           endDate={endDate}
-//           repetead={false}
-//           onBarDoubleClick={onBarDoubleClick}
-//         />
-//       );
-//     });
-//   }, [data, title, barKey, onBarDoubleClick, firstRenderedDate, lastRenderedDate]);
-
-//   return <>{renderedBars}</>;
-// };
 
 const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBarDoubleClick }) => {
   const { relScaleDates, scaleRenderState } = useContext(RelGanttContext);
@@ -91,8 +30,14 @@ const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBa
     return relScaleDates[scaleRenderState.overscanStopIndex];
   }, [relScaleDates, scaleRenderState.overscanStopIndex]);
 
+  useEffect(() => {
+    console.log(data, 'barsdata');
+  });
+
   const renderedBars = useMemo(() => {
-    return data?.map((ele: any, i: number) => {
+    const sortedData = [...data].sort((a, b) => a.startDate - b.startDate);
+
+    return sortedData?.map((ele: any, i: number) => {
       const startDate = ele.startDate;
       const endDate = ele.endDate;
 
@@ -102,28 +47,18 @@ const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBa
         return null;
       }
 
-      if (ele.repeatType) {
-        <RelativeRepeteadBars
-          key={i}
-          data={ele}
-          firstRenderedDate={firstRenderedDate}
-          lastRenderedDate={lastRenderedDate}
-          title={title}
-          barKey={barKey}
-          onBarDoubleClick={onBarDoubleClick}
-        />;
-      }
-
       return (
-        <RelativeBarItem
-          key={barKey + startDate}
-          title={title}
-          barKey={barKey}
-          startDate={startDate}
-          endDate={endDate}
-          repetead={true}
-          onBarDoubleClick={onBarDoubleClick}
-        />
+        <div style={{ position: 'relative' }}>
+          <RelativeBarItem
+            key={barKey + startDate}
+            title={title}
+            barKey={barKey}
+            startDate={startDate}
+            endDate={endDate}
+            repetead={true}
+            onBarDoubleClick={onBarDoubleClick}
+          />
+        </div>
       );
     });
   }, [data, title, barKey, onBarDoubleClick]);

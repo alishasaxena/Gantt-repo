@@ -31,12 +31,14 @@ const RelativeBarsRow: React.FC<BarsRowProps> = ({ barData, index, style, onBarD
   return (
     <RelBarsRowContext.Provider value={{ barData }}>
       <div className="rel-gantt-bars-row-wrap" style={wrapStyle}>
-        <RelativeBarItems
-          data={barData.data}
-          title={barData.title}
-          barKey={barData.key}
-          onBarDoubleClick={onBarDoubleClick}
-        />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <RelativeBarItems
+            data={barData.data}
+            title={barData.title}
+            barKey={barData.key}
+            onBarDoubleClick={onBarDoubleClick}
+          />
+        </div>
       </div>
     </RelBarsRowContext.Provider>
   );
