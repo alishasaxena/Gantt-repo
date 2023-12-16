@@ -56,6 +56,9 @@ const RelativeBars = forwardRef<List, BarsProps>(
       );
     }, [relScaleDates, relSettings.dimension, relSettings.scaleStepItems, relSettings.stepWidth]);
 
+    useEffect(() => {
+      console.log(scaleWidth, 'aalisha');
+    });
     const snapToGrid = useMemo(
       () => createSnapModifier(relSettings.gridSize),
       [relSettings.gridSize]
