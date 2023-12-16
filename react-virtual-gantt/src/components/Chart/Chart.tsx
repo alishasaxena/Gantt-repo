@@ -117,9 +117,6 @@ export const RelativeChart: React.FC<ChartProps> = ({
   onBarDoubleClick,
   onBarChange,
 }) => {
-  useEffect(() => {
-    console.log(data, 'RelativeData');
-  }, []);
   const { relSettings, relScaleDates, wrapRef, setRelCurrentDate } = useContext(RelGanttContext);
 
   const scaleRef = useRef<List>(null);
@@ -162,10 +159,6 @@ export const RelativeChart: React.FC<ChartProps> = ({
   useEffect(() => {
     setTransformedData(transformData(data));
   }, [data]);
-
-  useEffect(() => {
-    console.log('chart.tx', width);
-  }, [transformData]);
 
   return (
     <div

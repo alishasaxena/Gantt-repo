@@ -18,10 +18,6 @@ interface BarsItemsProps {
 const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBarDoubleClick }) => {
   const { relScaleDates, scaleRenderState } = useContext(RelGanttContext);
 
-  useEffect(() => {
-    console.log('tushar', data);
-  }, []);
-
   const firstRenderedDate = useMemo(() => {
     return relScaleDates[scaleRenderState.overscanStartIndex];
   }, [relScaleDates, scaleRenderState.overscanStartIndex]);
@@ -30,18 +26,12 @@ const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBa
     return relScaleDates[scaleRenderState.overscanStopIndex];
   }, [relScaleDates, scaleRenderState.overscanStopIndex]);
 
-  useEffect(() => {
-    console.log(data, 'barsdata');
-  });
-
   const renderedBars = useMemo(() => {
     const sortedData = [...data].sort((a, b) => a.startDate - b.startDate);
 
     return sortedData?.map((ele: any, i: number) => {
       const startDate = ele.startDate;
       const endDate = ele.endDate;
-
-      console.log('fgh', startDate);
 
       if (!ele) {
         return null;

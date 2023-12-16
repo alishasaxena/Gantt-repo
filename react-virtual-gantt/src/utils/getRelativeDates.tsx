@@ -1,11 +1,4 @@
 export const getRelativeDates = (data: any) => {
-  console.log(
-    data.map((ele: any) => {
-      return ele.data[0].endDate;
-    }),
-    'reldata'
-  );
-
   const arrayOfHours = data.map((ele: any) => {
     return ele.data[0].endDate;
   });

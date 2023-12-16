@@ -25,9 +25,6 @@ const RelativeBarsRow: React.FC<BarsRowProps> = ({ barData, index, style, onBarD
     };
   }, [index, relSettings.stepWidth, style]);
 
-  useEffect(() => {
-    console.log(wrapStyle, 'bardata');
-  });
   return (
     <RelBarsRowContext.Provider value={{ barData }}>
       <div className="rel-gantt-bars-row-wrap" style={wrapStyle}>

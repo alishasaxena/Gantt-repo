@@ -22,9 +22,6 @@ const RepeteadBars: React.FC<RepeteadBarsProps> = ({
   barKey,
   onBarDoubleClick,
 }) => {
-  useEffect(() => {
-    console.log(data, 'wtfdata');
-  }, []);
   const fromDate = useMemo(() => {
     if (!firstRenderedDate) {
       return null;
@@ -117,7 +114,6 @@ const RepeteadBars: React.FC<RepeteadBarsProps> = ({
 
         break;
     }
-    console.log(result, 'alisha');
 
     return result;
   }, [data, duration, fromDate, toDate]);

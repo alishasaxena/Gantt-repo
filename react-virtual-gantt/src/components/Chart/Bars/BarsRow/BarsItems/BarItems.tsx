@@ -23,7 +23,6 @@ const BarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBarDoubleC
     return scaleDates[scaleRenderState.overscanStopIndex];
   }, [scaleDates, scaleRenderState.overscanStopIndex]);
 
-  console.log(data, 'taylor');
   const renderedBars = useMemo(() => {
     return data?.map((ele: BarItemDataType, i: number) => {
       const startDate = dayjs(ele?.startDate).unix();

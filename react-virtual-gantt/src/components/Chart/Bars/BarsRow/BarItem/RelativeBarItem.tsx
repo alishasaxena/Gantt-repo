@@ -41,7 +41,6 @@ const RelativeBarItem = memo<BarItemProps>(
     }, [repetead, relSettings.secondsInPixel]);
 
     const startPosition = useMemo(() => {
-      console.log('position', startDate, relScaleDates);
       return startDate * relSettings.stepWidth;
     }, [relScaleDates, relSettings.secondsInPixel, startDate]);
 
@@ -73,14 +72,6 @@ const RelativeBarItem = memo<BarItemProps>(
 
       return newDelta;
     }, [activeDragType, maxWidth, relSettings.gridSize, startWidth, transform]);
-
-    useEffect(() => {
-      console.log('maxWidth', maxWidth);
-      console.log('itemWidthN', itemWidth);
-      console.log('translateStyle', translateStyle);
-      console.log('startWidth', startWidth);
-      console.log('startPosition', startPosition);
-    });
 
     const itemWidth = useMemo(() => {
       return activeDragType === DragTypes.DRAG ? startWidth : startWidth + delta;

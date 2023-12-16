@@ -56,9 +56,6 @@ const RelativeBars = forwardRef<List, BarsProps>(
       );
     }, [relScaleDates, relSettings.dimension, relSettings.scaleStepItems, relSettings.stepWidth]);
 
-    useEffect(() => {
-      console.log(scaleWidth, 'aalisha');
-    });
     const snapToGrid = useMemo(
       () => createSnapModifier(relSettings.gridSize),
       [relSettings.gridSize]
@@ -211,9 +208,6 @@ const RelativeBars = forwardRef<List, BarsProps>(
       [data, onBarChange, setData, relSettings.gridSize, relSettings.secondsInPixel]
     );
 
-    useEffect(() => {
-      console.log(width, 'zoomba');
-    });
     return (
       <div className="rel-gantt-bars-wrap">
         <DndContext
@@ -234,7 +228,6 @@ const RelativeBars = forwardRef<List, BarsProps>(
             innerElementType={(props) => <InnerElement scaleWidth={scaleWidth} {...props} />}
           >
             {({ style, data, index }) => {
-              console.log('style', style);
               return (
                 <RelativeBarsRow
                   barData={data[index]}

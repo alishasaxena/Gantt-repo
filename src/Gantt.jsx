@@ -589,7 +589,6 @@ function groupTasksByTime(tasks) {
 
   tasks.forEach((task) => {
     const { key, data } = task;
-    console.log('datanew', data)
 
     if (!groupedTasks[key]) {
       groupedTasks[key] = { ...task, data: []};
@@ -607,7 +606,6 @@ function groupTasksByTime(tasks) {
 }
 
 const groupedTasks = groupTasksByTime(tasks);
-console.log(groupedTasks, 'tushar');
 
 //  for the following data if the key 'key' is same and start time and end time is different then give both data for start time and endtime  in one array as two objects inside a key name time, 
 

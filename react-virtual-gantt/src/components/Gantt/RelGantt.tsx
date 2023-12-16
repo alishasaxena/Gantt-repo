@@ -32,9 +32,6 @@ export const RelGantt: React.FC<RelGanttProps> & {
     return relGetInitialScrollOffset(RelativeGanttDimensions.HOUR, relInitialScaleDates);
   }, [relInitialScaleDates]);
 
-  useEffect(() => {
-    console.log('relInitialScrollOffset', relInitialScrollOffset);
-  }, []);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [relCurrentDate, setRelCurrentDate] = useState(1);
   const [relScaleDates, setRelScaleDates] = useState(relInitialScaleDates);

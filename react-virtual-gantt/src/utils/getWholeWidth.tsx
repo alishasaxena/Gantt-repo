@@ -23,7 +23,6 @@ export const getRelWholeWidth = (
   stepItemsCount: number,
   stepWidth: number
 ) => {
-  console.log(stepWidth, 'stepwidth', stepItemsCount);
   if (dimension === RelativeGanttDimensions.HOUR) {
     return (stepWidth + 1) * relScaleDates.length;
   }

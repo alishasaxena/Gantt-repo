@@ -23,7 +23,6 @@ export const getScaleItems = (dimension: GanttDimensions, date: number) => {
             minimumIntegerDigits: 2,
           })}`;
         }
-        console.log(index.toLocaleString('en-US', { minimumIntegerDigits: 2 }), 'result for day');
         return index.toLocaleString('en-US', { minimumIntegerDigits: 2 });
       });
     }
@@ -32,7 +31,6 @@ export const getScaleItems = (dimension: GanttDimensions, date: number) => {
       const size = dayjs.unix(date).daysInMonth();
 
       return new Array(size).fill(0).map((item, index) => {
-        console.log('heyyy');
         return (index + 1).toLocaleString('en-US', { minimumIntegerDigits: 2 });
       });
     }
@@ -55,7 +53,6 @@ export const getScaleItems = (dimension: GanttDimensions, date: number) => {
             minimumIntegerDigits: 2,
           })}`;
         }
-        console.log(size, 'result for minute');
         return index.toLocaleString('en-US', { minimumIntegerDigits: 2 });
       });
     }

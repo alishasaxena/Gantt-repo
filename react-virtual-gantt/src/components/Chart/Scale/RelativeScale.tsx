@@ -113,10 +113,6 @@ const RelativeScale = forwardRef<List<number[]>, RelativeScaleProps>(
     //   ]
     // );
 
-    useEffect(() => {
-      console.log('scale date', width);
-    });
-
     const onItemsRendered = useCallback(
       (renderedState: ListOnItemsRenderedProps) => {
         setScaleRenderState(renderedState);

@@ -107,7 +107,6 @@ function App() {
 
   // const [data, setData] = useState(reactGianttData)
 
-  console.log('data', data)
 
   // return (
   //   <div>
@@ -144,7 +143,6 @@ function App() {
   //       ]}
   //       locale={enUS}
   //       onUpdate={async (row, startDate, endDate) => {
-  //         console.log('update', row, startDate, endDate)
   //         setData(prev => {
   //           const newList = [...prev]
   //           const index = newList.findIndex(val => val.id === row.id)

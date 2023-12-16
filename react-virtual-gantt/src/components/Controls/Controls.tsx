@@ -54,7 +54,6 @@ const Controls: React.FC<ControlsProps> = ({ className, isRelative }) => {
   const onRelativeDimensionChange = useCallback(
     (value: RelativeGanttDimensions) => {
       const index = relativeDimensionOptions.findIndex((item) => {
-        console.log('gfhf', item);
         return item.value === value;
       });
       setRelativeDimensionValue(value);

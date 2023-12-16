@@ -21,10 +21,6 @@ const RelativeRepeteadBars: React.FC<RepeteadBarsProps> = ({
   barKey,
   onBarDoubleClick,
 }) => {
-  useEffect(() => {
-    console.log(data, 'wtfdata');
-  }, []);
-
   const duration = useMemo(() => {
     return data.toTime < data.fromTime
       ? data.toTime + GanttConsts.SECONDS_IN_DAY - data.fromTime
@@ -72,8 +68,6 @@ const RelativeRepeteadBars: React.FC<RepeteadBarsProps> = ({
 
       startDate += GanttConsts.SECONDS_IN_DAY;
     }
-
-    console.log(result, 'alisha');
 
     return result;
   }, [data, duration, firstRenderedDate, lastRenderedDate]);

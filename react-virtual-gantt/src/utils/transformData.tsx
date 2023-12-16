@@ -46,6 +46,5 @@ export const transformData = (
     return result;
   }, []);
 
-  console.log(dataNew, 'tfdata');
   return dataNew;
 };

@@ -12,10 +12,6 @@ export const getRelativeScale = (data: any, dimension: any) => {
   if (dimension === 'hour') {
     return Array.from({ length: maxLength }, (_, index) => index + 1);
   } else {
-    console.log(
-      Array.from({ length: maxLength }, (_, index) => (index + 1) * 60),
-      'minute array'
-    );
     return Array.from({ length: maxLength }, (_, index) => (index + 1) * 60);
   }
 };
