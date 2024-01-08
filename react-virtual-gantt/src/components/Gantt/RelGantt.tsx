@@ -18,12 +18,13 @@ dayjs.extend(localizedFormat);
 type RelGanttProps = {
   children: ReactNode | ReactNode[];
   data: any; //my code
+  color: any;
 };
 
 export const RelGantt: React.FC<RelGanttProps> & {
   RelativeChart: typeof Chart;
   Controls: typeof Controls;
-} = ({ children, data }: RelGanttProps) => {
+} = ({ children, data, color }: RelGanttProps) => {
   const relInitialScaleDates = useMemo(() => {
     return getRelativeDates(data);
   }, []);
@@ -66,6 +67,7 @@ export const RelGantt: React.FC<RelGanttProps> & {
         setScaleRenderState,
         relCurrentDate,
         setRelCurrentDate,
+        color,
       }}
     >
       <div className="gantt-wrap">{children}</div>

@@ -25,6 +25,7 @@ export interface RelGanttContextType {
   setScaleRenderState: Dispatch<SetStateAction<ListOnItemsRenderedProps>>;
   relCurrentDate: number;
   setRelCurrentDate: Dispatch<SetStateAction<number>>;
+  color: any;
 }
 
 export interface BarsRowContextType {

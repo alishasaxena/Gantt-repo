@@ -116,6 +116,7 @@ export const RelativeChart: React.FC<ChartProps> = ({
   className,
   onBarDoubleClick,
   onBarChange,
+  color,
 }) => {
   const { relSettings, relScaleDates, wrapRef, setRelCurrentDate } = useContext(RelGanttContext);
 
@@ -197,6 +198,7 @@ export const RelativeChart: React.FC<ChartProps> = ({
               height={height}
               onBarDoubleClick={onBarDoubleClick}
               onBarChange={onBarChange}
+              color={color}
             />
           </div>
         </>

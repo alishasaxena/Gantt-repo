@@ -13,9 +13,16 @@ interface BarsItemsProps {
   title: string;
   barKey: string;
   onBarDoubleClick?: OnBarDoubleClickType;
+  color: any;
 }
 
-const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBarDoubleClick }) => {
+const RelativeBarsItems: React.FC<BarsItemsProps> = ({
+  data,
+  title,
+  barKey,
+  onBarDoubleClick,
+  color,
+}) => {
   const { relScaleDates, scaleRenderState } = useContext(RelGanttContext);
 
   const firstRenderedDate = useMemo(() => {
@@ -47,6 +54,7 @@ const RelativeBarsItems: React.FC<BarsItemsProps> = ({ data, title, barKey, onBa
             endDate={endDate}
             repetead={true}
             onBarDoubleClick={onBarDoubleClick}
+            color={color}
           />
         </div>
       );

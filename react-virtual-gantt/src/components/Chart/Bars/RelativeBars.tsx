@@ -25,6 +25,7 @@ interface InnerElementProps {
   scaleWidth: number;
   style: CSSProperties;
   children: ReactNode;
+  color?: any;
 }
 
 interface BarsProps {
@@ -34,6 +35,7 @@ interface BarsProps {
   setData: Dispatch<SetStateAction<GanttItemDataType[]>>;
   onBarDoubleClick?: OnBarDoubleClickType;
   onBarChange?: OnBarChangeType;
+  color: any;
 }
 
 const InnerElement: React.FC<InnerElementProps> = ({ scaleWidth, style, children, ...props }) => {
@@ -44,7 +46,7 @@ const InnerElement: React.FC<InnerElementProps> = ({ scaleWidth, style, children
   );
 };
 const RelativeBars = forwardRef<List, BarsProps>(
-  ({ width, height, data, setData, onBarDoubleClick, onBarChange }, ref) => {
+  ({ width, height, data, setData, onBarDoubleClick, onBarChange, color }, ref) => {
     const { relSettings, relScaleDates } = useContext(RelGanttContext);
 
     const scaleWidth = useMemo(() => {
@@ -234,6 +236,7 @@ const RelativeBars = forwardRef<List, BarsProps>(
                   index={index}
                   style={style}
                   onBarDoubleClick={onBarDoubleClick}
+                  color={color}
                 />
               );
             }}

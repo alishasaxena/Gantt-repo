@@ -11,9 +11,16 @@ interface BarsRowProps {
   index: number;
   style: CSSProperties;
   onBarDoubleClick?: OnBarDoubleClickType;
+  color: any;
 }
 
-const RelativeBarsRow: React.FC<BarsRowProps> = ({ barData, index, style, onBarDoubleClick }) => {
+const RelativeBarsRow: React.FC<BarsRowProps> = ({
+  barData,
+  index,
+  style,
+  onBarDoubleClick,
+  color,
+}) => {
   const { relSettings } = useContext(RelGanttContext);
 
   const wrapStyle = useMemo(() => {
@@ -34,6 +41,7 @@ const RelativeBarsRow: React.FC<BarsRowProps> = ({ barData, index, style, onBarD
             title={barData.title}
             barKey={barData.key}
             onBarDoubleClick={onBarDoubleClick}
+            color={color}
           />
         </div>
       </div>

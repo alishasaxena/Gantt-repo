@@ -21,10 +21,11 @@ type BarItemProps = {
   endDate: number;
   repetead: boolean;
   onBarDoubleClick?: OnBarDoubleClickType;
+  color: string;
 };
 
 const RelativeBarItem = memo<BarItemProps>(
-  ({ title, barKey, startDate, endDate, repetead, onBarDoubleClick }: BarItemProps) => {
+  ({ title, barKey, startDate, endDate, repetead, onBarDoubleClick, color }: BarItemProps) => {
     const { relScaleDates, relSettings } = useContext(RelGanttContext);
     const { barData } = useContext(RelBarsRowContext);
     const { attributes, listeners, transform, activatorEvent, setNodeRef, setActivatorNodeRef } =
@@ -131,7 +132,7 @@ const RelativeBarItem = memo<BarItemProps>(
           <div
             className="gantt-bars-row-item-bar"
             style={{
-              backgroundColor: barData.color,
+              backgroundColor: color,
             }}
             data-dragtype={DragTypes.DRAG}
             {...listeners}

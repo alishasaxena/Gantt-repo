@@ -25,4 +25,5 @@ export const RelGanttContext = createContext<RelGanttContextType>({
   setScaleRenderState: () => {},
   relCurrentDate: 0,
   setRelCurrentDate: () => 0,
+  color: '#000',
 });

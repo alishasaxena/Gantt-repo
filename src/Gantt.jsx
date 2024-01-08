@@ -584,6 +584,24 @@ const list = [
     }
 ]
 
+const hexCodes = [
+  "#FF5733", "#33FF57", "#5733FF", "#FF33E6", "#33E6FF", 
+  "#E6FF33", "#8A33FF", "#FF338A", "#338AFF", "#FF8A33", 
+  "#33FF8A", "#8AFF33", "#A833FF", "#FFA833", "#A8FF33", 
+  "#33A8FF", "#33FFA8", "#FF33A8", "#E633FF", "#FFE633", 
+  "#33FFE6", "#FFE6FF", "#E6FF33", "#FF33E6", "#33E6FF"
+];
+
+if (list.length === hexCodes.length) {
+  list.forEach((item, index) => {
+    item["color"] = hexCodes[index];
+  });
+} else {
+  console.log("Number of hex codes does not match the number of items in the list.");
+}
+
+console.log('list', list)
+
 function groupTasksByTime(tasks) {
   const groupedTasks = {};
 
@@ -617,7 +635,7 @@ const groupedTasks = groupTasksByTime(tasks);
         }}> 
             <RelGantt data={list}>   
                 <RelGantt.Controls isRelative={true}  />
-                <RelGantt.RelativeChart className="gantt-chart__body" data={list} />
+                <RelGantt.RelativeChart className="gantt-chart__body" data={list} color={"#CD5C5C"}/>
             </RelGantt>
              {/* <Gantt >   
                 <Gantt.Controls isRelative={false}  />
