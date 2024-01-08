@@ -11,6 +11,7 @@ import { OnBarDoubleClickType } from '../../../../../types';
 import 'tippy.js/dist/tippy.css';
 import './BarItem.css';
 import { RelGanttContext } from '../../../../Gantt/RelativeGanttContext';
+import { NodeNextRequest } from 'next/dist/server/base-http/node';
 
 let onPointerDownTimeout: NodeJS.Timeout;
 
@@ -126,6 +127,7 @@ const RelativeBarItem = memo<BarItemProps>(
             position: 'absolute',
             width: itemWidth,
             transform: translateStyle,
+            pointerEvents: 'none',
           }}
           ref={setNodeRef}
         >
@@ -156,7 +158,7 @@ const RelativeBarItem = memo<BarItemProps>(
               })}
               data-dragtype={DragTypes.DRAG}
             >
-              {title}
+              {`${title} (${startDate} -> ${endDate})`}
             </div>
             <div
               className={cn('gantt-bars-row-item-right-button', 'gantt-bars-row-item-button', {
